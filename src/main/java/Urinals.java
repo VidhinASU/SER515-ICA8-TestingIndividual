@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,12 +13,11 @@ public class Urinals {
     private final ArrayList<String> input = new ArrayList<>();
     private Boolean isInputFromFile;
 
-    // public static void main(String[] args) throws Exception { {
-    public void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
+        // public void main(String[] args) throws Exception {
         Urinals urinal = new Urinals();
         urinal.getInput(true, "urinal.dat");
         urinal.sendOutput();
-
     }
 
     // getter for input
@@ -140,7 +138,7 @@ public class Urinals {
         }
     }
 
-    public void sendOutput() {
+    public void sendOutput() throws Exception {
         // System.out.println ("Not yet implemented");
         if (isInputFromFile) {
             // output to rule.txt. If the file rule.txt already
@@ -150,7 +148,7 @@ public class Urinals {
 
             int count = 0;
             while (true) {
-                String fileName = "rule" + count + ".txt";
+                String fileName = count == 0 ? "dataFiles/rule.txt" : "dataFiles/rule" + count + ".txt";
                 File file = new File(fileName);
                 if (file.exists()) {
                     count++;
@@ -159,7 +157,8 @@ public class Urinals {
                 }
             }
             try {
-                PrintWriter pw = new PrintWriter("rule" + count + ".txt");
+                String fileName = count == 0 ? "dataFiles/rule.txt" : "dataFiles/rule" + count + ".txt";
+                PrintWriter pw = new PrintWriter(fileName);
                 for (String s : input) {
                     pw.println(getFreeUrinals(s));
                 }

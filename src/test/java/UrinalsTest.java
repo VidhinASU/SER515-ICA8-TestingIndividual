@@ -1,6 +1,9 @@
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -195,5 +198,38 @@ class UrinalsTest {
         Throwable exception = assertThrows(FileNotFoundException.class,
                 () -> urinal.getInput(true, "urinalssssss.dat"));
         assertEquals("dataFiles\\urinalssssss.dat (The system cannot find the file specified)", exception.getMessage());
+    }
+
+    // write file exception in sendOutput file is duplicate
+    // since we create an output file with ending numbers based on last known
+    // serialized digit in the file, we will never get this exception in our program
+    @Test
+    void sendOutputFileDuplicate() {
+        System.out.println("====== Vidhin Parmar== TEST TWENTY TWO EXECUTED =======");
+        Urinals urinal = new Urinals();
+        try {
+            urinal.getInput(true, "urinal.dat");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // run the generated output file function twice and check if any exception is thrown
+        try {
+            urinal.sendOutput();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            urinal.sendOutput();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //check if the two files rule.txt and rule1.txt are same in content
+        File file1 = new File("dataFiles\\rule.txt");
+        File file2 = new File("dataFiles\\rule1.txt");
+        try {
+            assertTrue(FileUtils.contentEquals(file1, file2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
