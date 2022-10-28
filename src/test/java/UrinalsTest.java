@@ -162,7 +162,8 @@ class UrinalsTest {
     void getInputFileDoesNotExist() {
         System.out.println("====== Vidhin Parmar== TEST NINETEEN EXECUTED =======");
         Urinals urinal = new Urinals();
-        Throwable exception = assertThrows(FileNotFoundException.class, () -> urinal.getInput(true, "urinalssssss.dat"));
+        Throwable exception = assertThrows(FileNotFoundException.class,
+                () -> urinal.getInput(true, "urinalssssss.dat"));
         assertEquals("dataFiles\\urinalssssss.dat (The system cannot find the file specified)", exception.getMessage());
     }
 
@@ -174,6 +175,25 @@ class UrinalsTest {
         // check if function printed File is empty or Null
         urinal.getInput(true, "urinalsEmpty.dat");
         assertEquals(0, urinal.getInput().size());
-        
+    }
+
+    // IOException has many subclasses that are specific in nature.
+    // That means, when your application searching to read a file,
+    // if the file is not found that there is a ileNotFoundException to be thrown.
+    // FileNotFoundException is a subclass of IOException
+    // Few of the well known classes are:
+    //
+    // FileNotFoundException
+    // EOFException
+    // SSLException
+    // UnSupportedEncodingException
+    // SocketException
+    @Test
+    void getInputFileIOException() {
+        System.out.println("====== Vidhin Parmar== TEST NINETEEN EXECUTED =======");
+        Urinals urinal = new Urinals();
+        Throwable exception = assertThrows(FileNotFoundException.class,
+                () -> urinal.getInput(true, "urinalssssss.dat"));
+        assertEquals("dataFiles\\urinalssssss.dat (The system cannot find the file specified)", exception.getMessage());
     }
 }
