@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UrinalsTest {
@@ -123,7 +125,7 @@ class UrinalsTest {
         assertTrue(urinals.goodPublicUrinalString("101"));
     }
 
-    //Bad String too long (>20)
+    // Bad String too long (>20)
     @Test
     void badString3() {
         System.out.println("====== Vidhin Parmar== TEST FIFTEEN EXECUTED =======");
@@ -131,7 +133,7 @@ class UrinalsTest {
         assertFalse(urinals.goodString("101010101010101010101"));
     }
 
-    //Bad String too short <1
+    // Bad String too short <1
     @Test
     void badString4() {
         System.out.println("====== Vidhin Parmar== TEST SIXTEEN EXECUTED =======");
@@ -139,7 +141,7 @@ class UrinalsTest {
         assertFalse(urinals.goodString(""));
     }
 
-    //Bad Case Public Urinal String too long (>20)
+    // Bad Case Public Urinal String too long (>20)
     @Test
     void badPublicUrinalString5() {
         System.out.println("====== Vidhin Parmar== TEST SEVENTEEN EXECUTED =======");
@@ -147,7 +149,7 @@ class UrinalsTest {
         assertFalse(urinals.goodPublicUrinalString("101010101010101010101"));
     }
 
-    //Bad Case Public Urinal String too short <1
+    // Bad Case Public Urinal String too short <1
     @Test
     void badPublicUrinalString6() {
         System.out.println("====== Vidhin Parmar== TEST EIGHTEEN EXECUTED =======");
@@ -155,4 +157,12 @@ class UrinalsTest {
         assertFalse(urinals.goodPublicUrinalString(""));
     }
 
+    // Read file test file does not exist
+    @Test
+    void getInputFileDoesNotExist() {
+        System.out.println("====== Vidhin Parmar== TEST NINETEEN EXECUTED =======");
+        Urinals urinal = new Urinals();
+        Throwable exception = assertThrows(FileNotFoundException.class, () -> urinal.getInput(true));
+        assertEquals("urinal.dat (The system cannot find the file specified)", exception.getMessage());
+    }
 }

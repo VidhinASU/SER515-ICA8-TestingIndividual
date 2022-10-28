@@ -1,10 +1,22 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * This is a class for Urinals
  *
  * @author Vidhin
  */
 public class Urinals {
+    private final ArrayList<String> input = new ArrayList<>();
+    private Boolean isInputFromFile;
+
     public static void main(String[] args) {
+        // Urinals urinal = new Urinals();
+        // urinal.getInput(true);
+        // urinal.sendOutput();
 
     }
 
@@ -15,7 +27,7 @@ public class Urinals {
         if (str.length() < 1 || str.length() > 20) {
             return false;
         }
-        
+
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) != '0' && str.charAt(i) != '1') {
                 return false;
@@ -28,7 +40,7 @@ public class Urinals {
     public Boolean goodPublicUrinalString(String str) {
         // System.out.println ("Not yet implemented");
         // checks to see if valid string using goodString method
-        if (goodString(str) == false) {
+        if (!goodString(str)) {
             return false;
         }
 
@@ -43,10 +55,8 @@ public class Urinals {
     }
 
     // given a string of urinals, return the number of urinals that can be used as
-    // mens
-    // public toilet, there is this unwritten rule that you leave at least one
-    // urinal
-    // free between you and the next person peeing
+    // mens public toilet, there is this unwritten rule that you leave at least one
+    // urinal free between you and the next person peeing
     public int getFreeUrinals(String str) {
         // System.out.println ("Not yet implemented");
         int count = 0;
@@ -77,5 +87,80 @@ public class Urinals {
             }
         }
         return count;
+    }
+
+    // get input from keyboard or a file named urinal.dat
+    // if input is from keyboard, print results to screen
+    // if input is from file, output to rule.txt
+    public void getInput(Boolean isFromFile) throws Exception {
+        // System.out.println ("Not yet implemented");
+        // continue processing until a -1 or <eof> is reached
+        if (isFromFile) {
+            isInputFromFile = true;
+            try {
+                Scanner sc = new Scanner(new File("urinal.dat"));
+                while (sc.hasNext()) {
+                    String str = sc.nextLine();
+                    if (str.equals("-1")) {
+                        break;
+                    }
+                    input.add(str);
+                }
+                sc.close();
+            } catch (FileNotFoundException e) {
+                // IOException
+                // System.out.println("File not found");
+                throw e;
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+            // NumberFormatException // does this go here?
+            // This will not be used because we are directly comparing strings instead of
+            // integers
+        } else {
+            isInputFromFile = false;
+            Scanner sc = new Scanner(System.in);
+            String str = sc.nextLine();
+            while (!str.equals("-1")) {
+                input.add(str);
+                str = sc.nextLine();
+            }
+            sc.close();
+        }
+    }
+
+    public void sendOutput() {
+        // System.out.println ("Not yet implemented");
+        if (isInputFromFile) {
+            // output to rule.txt. If the file rule.txt already
+            // exists, increment a counter, and rename the file using the following rule
+            // pattern: rule1.txt, rule2.txt, etc.
+            // The output is JUST THE NUMBER of free urinals.
+
+            int count = 0;
+            while (true) {
+                String fileName = "rule" + count + ".txt";
+                File file = new File(fileName);
+                if (file.exists()) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            try {
+                PrintWriter pw = new PrintWriter("rule" + count + ".txt");
+                for (String s : input) {
+                    pw.println(getFreeUrinals(s));
+                }
+                pw.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // print results to screen
+            for (String s : input) {
+                System.out.println(getFreeUrinals(s));
+            }
+        }
     }
 }
