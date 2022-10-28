@@ -11,7 +11,9 @@ import java.util.Scanner;
  */
 public class Urinals {
     private final ArrayList<String> input = new ArrayList<>();
+    private final String inputFolder = "dataFiles/";
     private Boolean isInputFromFile;
+    private String outputFolder = "dataFiles/";
 
     public static void main(String[] args) throws Exception {
         // public void main(String[] args) throws Exception {
@@ -23,6 +25,11 @@ public class Urinals {
     // getter for input
     public ArrayList<String> getInput() {
         return input;
+    }
+
+    // setter for outputFolder
+    public void setOutputFolder(String outputFolder) {
+        this.outputFolder = outputFolder;
     }
 
     public Boolean goodString(String str) {
@@ -103,7 +110,7 @@ public class Urinals {
         if (isFromFile) {
             isInputFromFile = true;
             try {
-                Scanner sc = new Scanner(new File("dataFiles/" + fileName));
+                Scanner sc = new Scanner(new File(inputFolder + fileName));
                 while (sc.hasNext()) {
                     String str = sc.nextLine();
                     if (str.equals("-1")) {
@@ -148,7 +155,7 @@ public class Urinals {
 
             int count = 0;
             while (true) {
-                String fileName = count == 0 ? "dataFiles/rule.txt" : "dataFiles/rule" + count + ".txt";
+                String fileName = count == 0 ? outputFolder + "rule.txt" : outputFolder + "rule" + count + ".txt";
                 File file = new File(fileName);
                 if (file.exists()) {
                     count++;
@@ -157,14 +164,14 @@ public class Urinals {
                 }
             }
             try {
-                String fileName = count == 0 ? "dataFiles/rule.txt" : "dataFiles/rule" + count + ".txt";
+                String fileName = count == 0 ? outputFolder + "rule.txt" : outputFolder + "rule" + count + ".txt";
                 PrintWriter pw = new PrintWriter(fileName);
                 for (String s : input) {
                     pw.println(getFreeUrinals(s));
                 }
                 pw.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                throw e;
             }
         } else {
             // print results to screen

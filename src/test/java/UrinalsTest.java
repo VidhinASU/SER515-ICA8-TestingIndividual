@@ -165,8 +165,7 @@ class UrinalsTest {
     void getInputFileDoesNotExist() {
         System.out.println("====== Vidhin Parmar== TEST NINETEEN EXECUTED =======");
         Urinals urinal = new Urinals();
-        Throwable exception = assertThrows(FileNotFoundException.class,
-                () -> urinal.getInput(true, "urinalssssss.dat"));
+        Throwable exception = assertThrows(FileNotFoundException.class, () -> urinal.getInput(true, "urinalssssss.dat"));
         assertEquals("dataFiles\\urinalssssss.dat (The system cannot find the file specified)", exception.getMessage());
     }
 
@@ -195,8 +194,7 @@ class UrinalsTest {
     void getInputFileIOException() {
         System.out.println("====== Vidhin Parmar== TEST TWENTY ONE EXECUTED =======");
         Urinals urinal = new Urinals();
-        Throwable exception = assertThrows(FileNotFoundException.class,
-                () -> urinal.getInput(true, "urinalssssss.dat"));
+        Throwable exception = assertThrows(FileNotFoundException.class, () -> urinal.getInput(true, "urinalssssss.dat"));
         assertEquals("dataFiles\\urinalssssss.dat (The system cannot find the file specified)", exception.getMessage());
     }
 
@@ -212,7 +210,8 @@ class UrinalsTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // run the generated output file function twice and check if any exception is thrown
+        // run the generated output file function twice and check if any exception is
+        // thrown
         try {
             urinal.sendOutput();
         } catch (Exception e) {
@@ -223,7 +222,7 @@ class UrinalsTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //check if the two files rule.txt and rule1.txt are same in content
+        // check if the two files rule.txt and rule1.txt are same in content
         File file1 = new File("dataFiles\\rule.txt");
         File file2 = new File("dataFiles\\rule1.txt");
         try {
@@ -231,5 +230,21 @@ class UrinalsTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // write IOException file has wrong path (folder does not exist)
+    @Test
+    void sendOutputFileIOException() {
+        System.out.println("====== Vidhin Parmar== TEST TWENTY THREE EXECUTED =======");
+        Urinals urinal = new Urinals();
+        try {
+            urinal.getInput(true, "urinal.dat");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        urinal.setOutputFolder("abcdefghijk/");
+        // catch IOException of type FileNotFoundException to be thrown because folder does not exist
+        Throwable exception = assertThrows(FileNotFoundException.class, () -> urinal.sendOutput());
+        assertEquals("abcdefghijk\\rule.txt (The system cannot find the path specified)", exception.getMessage());
     }
 }
