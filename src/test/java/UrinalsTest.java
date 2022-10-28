@@ -6,7 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This is a test class for Urinals
+ *
+ * @author Vidhin
+ */
 class UrinalsTest {
     // Test cases
 
