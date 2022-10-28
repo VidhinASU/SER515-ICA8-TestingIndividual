@@ -162,7 +162,18 @@ class UrinalsTest {
     void getInputFileDoesNotExist() {
         System.out.println("====== Vidhin Parmar== TEST NINETEEN EXECUTED =======");
         Urinals urinal = new Urinals();
-        Throwable exception = assertThrows(FileNotFoundException.class, () -> urinal.getInput(true));
-        assertEquals("urinal.dat (The system cannot find the file specified)", exception.getMessage());
+        Throwable exception = assertThrows(FileNotFoundException.class, () -> urinal.getInput(true, "urinalssssss.dat"));
+        assertEquals("dataFiles\\urinalssssss.dat (The system cannot find the file specified)", exception.getMessage());
+    }
+
+    // Read file test file is empty
+    @Test
+    void getInputFileIsEmpty() throws Exception {
+        System.out.println("====== Vidhin Parmar== TEST TWENTY EXECUTED =======");
+        Urinals urinal = new Urinals();
+        // check if function printed File is empty or Null
+        urinal.getInput(true, "urinalsEmpty.dat");
+        assertEquals(0, urinal.getInput().size());
+        
     }
 }

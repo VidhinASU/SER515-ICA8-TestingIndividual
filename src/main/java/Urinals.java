@@ -13,11 +13,17 @@ public class Urinals {
     private final ArrayList<String> input = new ArrayList<>();
     private Boolean isInputFromFile;
 
-    public static void main(String[] args) {
-        // Urinals urinal = new Urinals();
-        // urinal.getInput(true);
-        // urinal.sendOutput();
+    // public static void main(String[] args) throws Exception { {
+    public void main(String[] args) throws Exception {
+        Urinals urinal = new Urinals();
+        urinal.getInput(true, "urinal.dat");
+        urinal.sendOutput();
 
+    }
+
+    // getter for input
+    public ArrayList<String> getInput() {
+        return input;
     }
 
     public Boolean goodString(String str) {
@@ -92,13 +98,13 @@ public class Urinals {
     // get input from keyboard or a file named urinal.dat
     // if input is from keyboard, print results to screen
     // if input is from file, output to rule.txt
-    public void getInput(Boolean isFromFile) throws Exception {
+    public void getInput(Boolean isFromFile, String fileName) throws Exception {
         // System.out.println ("Not yet implemented");
         // continue processing until a -1 or <eof> is reached
         if (isFromFile) {
             isInputFromFile = true;
             try {
-                Scanner sc = new Scanner(new File("urinal.dat"));
+                Scanner sc = new Scanner(new File("dataFiles/" + fileName));
                 while (sc.hasNext()) {
                     String str = sc.nextLine();
                     if (str.equals("-1")) {
@@ -117,6 +123,10 @@ public class Urinals {
             // NumberFormatException // does this go here?
             // This will not be used because we are directly comparing strings instead of
             // integers
+            // if file does not exist or is empty, return null
+            if (input.size() == 0) {
+                System.out.println("File is empty or Null");
+            }
         } else {
             isInputFromFile = false;
             Scanner sc = new Scanner(System.in);
